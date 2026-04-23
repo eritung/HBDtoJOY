@@ -37,8 +37,9 @@
 
     .shell{
       position:relative;
+      min-height:100svh;
       min-height:100dvh;
-      padding:max(18px, env(safe-area-inset-top)) 16px max(18px, env(safe-area-inset-bottom));
+      padding:max(22px, calc(env(safe-area-inset-top) + 12px)) 16px max(26px, calc(env(safe-area-inset-bottom) + 14px));
       display:grid;
       grid-template-rows:auto 1fr auto;
       place-items:center;
@@ -115,7 +116,8 @@
       position:relative;
       z-index:2;
       width:min(100%, 420px);
-      height:min(79dvh, 790px);
+      height:min(72svh, 720px);
+      transform:translateY(-26px);
       display:flex;
       align-items:flex-start;
       justify-content:center;
@@ -125,7 +127,7 @@
     .printer-scene{
       position:relative;
       width:min(94vw, 360px);
-      height:min(100%, 700px);
+      height:min(100%, 660px);
       cursor:pointer;
       user-select:none;
       touch-action:manipulation;
@@ -165,11 +167,11 @@
     .receipt-window{
       position:absolute;
       left:50%;
-      top:258px;
+      top:226px;
       transform:translateX(-50%);
       width:78%;
       max-width:292px;
-      height:430px;
+      height:400px;
       overflow:hidden;
       z-index:3;
       pointer-events:none;
@@ -280,7 +282,7 @@
     .paper-feed{
       position:absolute;
       left:50%;
-      top:220px;
+      top:190px;
       transform:translateX(-50%);
       width:66%;
       max-width:228px;
@@ -300,7 +302,7 @@
     .printer{
       position:absolute;
       left:50%;
-      top:94px;
+      top:64px;
       transform:translateX(-50%);
       width:100%;
       height:170px;
@@ -434,11 +436,11 @@
     }
 
     .actions{
-      margin-top:8px;
+      margin-top:0;
       padding-bottom:14px;
       position:relative;
       z-index:2;
-      transform:translateY(-18px);
+      transform:translateY(-34px);
     }
 
     button{
@@ -465,7 +467,7 @@
     }
 
     @media (max-width:380px){
-      .floating{ top:170px; }
+      .floating{ top:148px; }
 
       .title h1{font-size:26px}
       .subtitle{font-size:11px}
@@ -478,11 +480,11 @@
 
       .printer-scene{
         width:min(95vw, 350px);
-        height:min(100%, 680px);
+        height:min(100%, 620px);
       }
 
       .printer{
-        top:98px;
+        top:74px;
         height:160px;
       }
 
@@ -502,15 +504,20 @@
       .slot{ top:102px; }
       .slot-paper{ top:110px; }
 
+      .stage{
+        height:min(68svh, 650px);
+        transform:translateY(-36px);
+      }
+
       .paper-feed{
-        top:220px;
+        top:194px;
         width:68%;
       }
 
       .receipt-window{
-        top:256px;
+        top:230px;
         width:80%;
-        height:420px;
+        height:388px;
       }
 
       .receipt-title{font-size:18px}

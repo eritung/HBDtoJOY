@@ -34,10 +34,14 @@
       color:var(--text);
       overflow:hidden;
       background:
-        radial-gradient(ellipse 80% 50% at 12% 8%, rgba(255,255,255,.72), transparent),
-        radial-gradient(ellipse 60% 40% at 88% 6%, rgba(255,255,255,.52), transparent),
+        /* rainbow corner glows – echoes the card's pastel border */
+        radial-gradient(ellipse 55% 38% at 4% 4%,  rgba(255,182,210,.38), transparent),
+        radial-gradient(ellipse 50% 34% at 96% 4%,  rgba(160,210,255,.34), transparent),
+        radial-gradient(ellipse 45% 32% at 96% 96%, rgba(180,255,200,.24), transparent),
+        radial-gradient(ellipse 40% 28% at 4%  96%, rgba(255,230,120,.30), transparent),
+        /* original warm base */
+        radial-gradient(ellipse 80% 50% at 12% 8%, rgba(255,255,255,.68), transparent),
         radial-gradient(ellipse 55% 35% at 78% 92%, rgba(255,220,80,.4), transparent),
-        radial-gradient(ellipse 45% 30% at 18% 88%, rgba(255,255,255,.28), transparent),
         linear-gradient(175deg, var(--bg1) 0%, #fff5b2 35%, var(--bg2) 68%, var(--bg3) 100%);
     }
 
@@ -84,14 +88,12 @@
       animation:drift linear infinite;
       filter:drop-shadow(0 4px 8px rgba(255,255,255,.3));
     }
-    .floaty.flower{font-size:clamp(16px,4vw,24px)}
+    .floaty.flower{font-size:clamp(16px,4vw,22px)}
     .floaty.dot{
-      width:6px;height:6px;border-radius:50%;
-      background:rgba(255,255,255,.8);
+      width:7px;height:7px;border-radius:50%;
     }
     .floaty.spark{
-      width:14px;height:5px;border-radius:999px;
-      background:rgba(255,255,255,.6);
+      width:13px;height:5px;border-radius:999px;
       transform:rotate(32deg);
     }
     @keyframes drift{
@@ -112,8 +114,8 @@
     .title h1{
       margin:0;
       font-family:"DM Serif Display","Noto Serif TC",serif;
-      font-size:clamp(24px,6.5vw,36px);
-      line-height:1.12;
+      font-size:clamp(30px,8vw,46px);
+      line-height:1.1;
       letter-spacing:.04em;
       color:#5c4510;
       text-shadow:
@@ -122,10 +124,10 @@
     }
 
     .subtitle{
-      margin:5px 0 0;
-      font-size:clamp(10px,2.6vw,12.5px);
+      margin:6px 0 0;
+      font-size:clamp(12.5px,3.2vw,15px);
       font-weight:400;
-      letter-spacing:.18em;
+      letter-spacing:.16em;
       color:var(--text-soft);
       line-height:1.5;
       font-family:"Noto Serif TC",serif;
@@ -244,10 +246,13 @@
     .receipt-label{
       font-size:10px;
       letter-spacing:.3em;
-      color:#a08530;
       font-weight:700;
       margin-bottom:6px;
       font-family:"DM Serif Display",serif;
+      background:linear-gradient(90deg,#ff9eb5,#ffbe5c,#ffe066,#80d8a0,#80c8ff,#c9a8ff);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
     }
 
     .receipt-line{
@@ -293,13 +298,75 @@
     .barcode-svg{
       display:block;width:72%;max-width:200px;
       height:auto;margin:0 auto;
-      opacity:.7;
+      opacity:.55;
     }
 
     .barcode-number{
       font-size:10.5px;font-weight:600;
       letter-spacing:.22em;color:#8a7440;
       font-family:monospace;
+    }
+
+    /* ── Liquid glass section at the bottom of the receipt ── */
+    .receipt-glass{
+      margin:10px -12px -30px;
+      padding:16px 12px 30px;
+      border-radius:0 0 22px 22px;
+      position:relative;
+      overflow:hidden;
+      /* Iridescent glass simulation – layered pastels that shift like light through glass */
+      background:
+        linear-gradient(135deg,
+          rgba(255,182,210,.22) 0%,
+          rgba(200,222,255,.28) 30%,
+          rgba(255,255,255,.36) 50%,
+          rgba(200,255,230,.22) 70%,
+          rgba(220,200,255,.25) 100%
+        );
+      border-top:1px solid rgba(255,255,255,.85);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.95),
+        inset 0 -1px 0 rgba(200,210,255,.2),
+        inset 0 0 24px rgba(200,215,255,.14);
+    }
+
+    /* Moving specular highlight – the "liquid" feel */
+    .receipt-glass::before{
+      content:"";
+      position:absolute;
+      top:-40%;left:-55%;
+      width:40%;height:180%;
+      background:linear-gradient(105deg,
+        transparent 30%,
+        rgba(255,255,255,.52) 50%,
+        transparent 70%
+      );
+      animation:glassShimmer 6s ease-in-out infinite 2.8s;
+      pointer-events:none;
+    }
+
+    /* Soft iridescent colour-shift layer */
+    .receipt-glass::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 40%, rgba(255,182,210,.18), transparent),
+        radial-gradient(ellipse 55% 45% at 80% 60%, rgba(160,210,255,.16), transparent);
+      pointer-events:none;
+      animation:iridShift 8s ease-in-out infinite;
+    }
+
+    @keyframes glassShimmer{
+      0%  {transform:translateX(0) skewX(-12deg);opacity:0}
+      8%  {opacity:1}
+      92% {opacity:1}
+      100%{transform:translateX(560%) skewX(-12deg);opacity:0}
+    }
+
+    @keyframes iridShift{
+      0%,100%{opacity:1}
+      50%    {opacity:.5}
     }
 
     /* ── Paper feed strip ── */
@@ -485,8 +552,70 @@
       position:relative;z-index:2;
       width:100%;
       display:flex;
-      justify-content:center;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
       padding:6px 0 4px;
+    }
+
+    /* ── Liquid glass YouTube link – real backdrop-filter over yellow bg ── */
+    .card-link{
+      display:inline-flex;
+      align-items:center;gap:8px;
+      text-decoration:none;
+      padding:13px 28px;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.05em;
+      font-family:"Noto Serif TC",serif;
+      color:#4a3680;
+      /* genuine glass – blurs the yellow gradient behind */
+      background:rgba(255,255,255,.22);
+      backdrop-filter:blur(28px) saturate(180%);
+      -webkit-backdrop-filter:blur(28px) saturate(180%);
+      /* rainbow gradient border via box-shadow outline + inner highlight */
+      border:1.5px solid transparent;
+      background-clip:padding-box;
+      box-shadow:
+        0 0 0 1.5px rgba(255,255,255,.55),
+        0 0 0 3px rgba(180,160,255,.22),
+        0 8px 24px rgba(0,0,0,.09),
+        inset 0 1px 0 rgba(255,255,255,.9),
+        inset 0 -1px 0 rgba(180,160,255,.15);
+      /* initially hidden, slides in after card opens */
+      opacity:0;
+      transform:translateY(14px);
+      pointer-events:none;
+      transition:
+        opacity .55s cubic-bezier(.2,.9,.2,1) 1.5s,
+        transform .55s cubic-bezier(.2,.9,.2,1) 1.5s,
+        box-shadow .2s ease;
+    }
+
+    .card-link .link-icon{
+      font-size:17px;line-height:1;
+    }
+
+    .card-link:hover{
+      box-shadow:
+        0 0 0 1.5px rgba(255,255,255,.7),
+        0 0 0 3px rgba(180,160,255,.35),
+        0 12px 28px rgba(0,0,0,.12),
+        inset 0 1px 0 rgba(255,255,255,.95);
+      background:rgba(255,255,255,.3);
+      transform:translateY(-1px);
+      transition:box-shadow .2s ease, background .2s ease, transform .2s ease;
+    }
+
+    .card-link:active{
+      transform:scale(.97);
+    }
+
+    .opened .card-link{
+      opacity:1;
+      transform:translateY(0);
+      pointer-events:auto;
     }
 
     .confetti-btn{
@@ -534,8 +663,8 @@
 
     /* ── Small phone adjustments ── */
     @media(max-width:380px){
-      .title h1{font-size:22px}
-      .subtitle{font-size:10px}
+      .title h1{font-size:26px}
+      .subtitle{font-size:12px}
       .hint-chip{font-size:11.5px;padding:8px 14px}
 
       .printer-scene{
@@ -584,8 +713,9 @@
 
               <h2 class="receipt-title">彭筠喬生日快樂</h2>
 
-              <div class="barcode-wrap">
-                <svg class="barcode-svg" viewBox="0 0 220 34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <div class="receipt-glass">
+                <div class="barcode-wrap">
+                  <svg class="barcode-svg" viewBox="0 0 220 34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                   <rect x="0" y="0" width="220" height="34" fill="transparent"/>
                   <g fill="#4a4a4a">
                     <rect x="8"   y="2" width="3"  height="30"/>
@@ -617,7 +747,8 @@
                   </g>
                 </svg>
                 <div class="barcode-number">2026 · 04 · 26</div>
-              </div>
+              </div><!-- /barcode-wrap -->
+              </div><!-- /receipt-glass -->
             </div>
           </div>
         </div>
@@ -649,6 +780,11 @@
     </main>
 
     <div class="actions">
+      <a id="cardLink" class="card-link"
+         href="https://www.youtube.com/watch?v=eFQmniTTD_A"
+         target="_blank" rel="noopener noreferrer">
+        <span class="link-icon">▶</span> 一起聽生日快樂歌
+      </a>
       <button id="againBtn" class="confetti-btn" type="button">🎊 再噴一次彩帶</button>
     </div>
   </div>
@@ -662,9 +798,11 @@
 
     let opened = false;
 
-    // Floating ambient particles
-    const items = ['🫐','🍇','💛','✨','⭐','🌟'];
-    for (let i = 0; i < 18; i++) {
+    // Floating ambient particles – emoji from card's vibe + Pikmin colors
+    const items = ['🫐','🍇','🌸','🌺','🎀','💜','⭐','✨'];
+    const dotColors  = ['rgba(255,182,210,.85)','rgba(160,210,255,.85)','rgba(255,220,100,.9)','rgba(160,230,180,.85)','rgba(255,255,255,.8)'];
+    const sparkColors= ['rgba(255,182,210,.7)', 'rgba(160,210,255,.7)', 'rgba(255,220,100,.75)','rgba(255,255,255,.6)'];
+    for (let i = 0; i < 20; i++) {
       const el = document.createElement('div');
       const type = i % 3;
       if (type === 0) {
@@ -672,8 +810,10 @@
         el.textContent = items[i % items.length];
       } else if (type === 1) {
         el.className = 'floaty dot';
+        el.style.background = dotColors[i % dotColors.length];
       } else {
         el.className = 'floaty spark';
+        el.style.background = sparkColors[i % sparkColors.length];
       }
       el.style.left = Math.random() * 100 + '%';
       el.style.animationDuration  = (10 + Math.random() * 9) + 's';
@@ -722,7 +862,8 @@
 
     function launchConfetti(count = 120, ox = window.innerWidth / 2, oy = window.innerHeight * 0.3) {
       resizeCanvas();
-      const colors = ['#c9b2ff','#e0d4ff','#9fcfff','#d7ecff','#ffffff','#ffd955','#ffb347','#ffe4a0'];
+      // Pikmin-inspired palette matching the card: yellow, red, blue, pink, green + whites
+      const colors = ['#f7c948','#ff8fa3','#5bc8f5','#80d8a0','#ffffff','#ffb347','#c9a8ff','#ffe4a0','#ff6b8a','#a8e6ff'];
       const shapes = ['rect','circle','rect'];
 
       for (let i = 0; i < count; i++) {

@@ -197,7 +197,6 @@
     }
 
     /* ── Receipt window ──
-       top = printer.top(44) + slot.top(100) = 144px
        The printer body (z-index:6) sits above this window (z-index:3),
        so the card is invisible until it slides past the printer's bottom edge,
        creating the illusion it prints out through the slot.
@@ -205,7 +204,7 @@
     .receipt-window{
       position:absolute;
       left:50%;
-      top:104px;
+      top:88px;
       transform:translateX(-50%);
       width:78%;max-width:284px;
       height:min(62svh, 430px);
